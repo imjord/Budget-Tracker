@@ -50,4 +50,35 @@ function uploadAmount() {
     const getAll = amountObjectStore.getAll();
 
     // fa
+
+    getAll.onsuccess = function() {
+        if (getAll.result.length > 0) {
+            fetch('/api/transaction', {
+                method: 'POST', 
+                body: JSON.stringify(getAll.result),
+                headers: {
+                    Accept: 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(serverResponse => {
+                if (serverResponse.message) {
+                    throw new Error(serverResponse);
+                }
+                const transaction = db.transaction(['new_amount'], 'readwrite');
+                const amountObjectStore = transaction.objectStore('new_amount');
+                amountObjectStore.clear();
+
+                alert('all saved transactions have been submitted')
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
+    }
 }
+
+
+
+window.addEventListener('online', uploadAmount);
