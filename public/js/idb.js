@@ -53,9 +53,10 @@ function uploadAmount() {
 
     getAll.onsuccess = function() {
         if (getAll.result.length > 0) {
+            console.log(getAll.result);
             fetch('/api/transaction', {
                 method: 'POST', 
-                body: JSON.stringify(getAll.result),
+                body: JSON.stringify(getAll.result.filter(Boolean)[0]),
                 headers: {
                     Accept: 'application/json, text/plain, */*',
                     'Content-Type': 'application/json'

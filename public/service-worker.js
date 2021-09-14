@@ -13,7 +13,7 @@ const FILES_TO_CACHE = [
     "./css/styles.css",
     "./manifest.json",
     "./index.html",
-   
+    
 
 ]
 
